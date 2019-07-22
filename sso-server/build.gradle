@@ -1,0 +1,49 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'sg.ctx.sso'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    maven { url 'http://192.168.100.5:8081/repository/maven-public/' }
+
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+}
+
+ext {
+    set('springBootAdminVersion', '2.1.4')
+    set('springCloudVersion', 'Greenwich.SR1')
+}
+
+dependencies {
+    implementation 'com.alibaba:fastjson:1.2.56'
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter'
+    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-security'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
